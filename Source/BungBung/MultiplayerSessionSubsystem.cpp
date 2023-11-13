@@ -88,7 +88,6 @@ void UMultiplayerSessionSubsystem::FindSession(int32 MaxSearchResults)
 		SessionInterface->ClearOnCancelFindSessionsCompleteDelegate_Handle(FindSessionCompleteDelegateHandle);
 		// Broadcast the result 
 		MultiplayerOnFindSessionComplete.Broadcast(TArray<FOnlineSessionSearchResult>(), false);
-
 	}
 
 }

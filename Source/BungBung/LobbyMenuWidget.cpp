@@ -3,6 +3,8 @@
 
 #include "LobbyMenuWidget.h"
 
+#include "OnlineSessionSettings.h"
+
 
 bool ULobbyMenuWidget::Initialize()
 {
@@ -11,6 +13,10 @@ bool ULobbyMenuWidget::Initialize()
 	if(HostButton)
 	{
 		HostButton->OnClicked.AddDynamic(this, &ULobbyMenuWidget::HostButtonClicked);
+	}
+	if(SearchButton)
+	{
+		SearchButton->OnClicked.AddDynamic(this, &ThisClass::SearchButtonClicked);
 	}
 
 	return true;
@@ -29,7 +35,8 @@ void ULobbyMenuWidget::NativeConstruct()
 	// Binding callbacks to Delegates of the MultiplayerSessionSubsystem class
 	if (MultiplayerSessionSubsystem)
 	{
-		MultiplayerSessionSubsystem->MultiplayerOnCreateSessionComplete.AddDynamic(this, &ThisClass::OnCreateSession);
+		MultiplayerSessionSubsystem->MultiplayerOnCreateSessionComplete.AddDynamic(this, &ThisClass::OnCreateSessionComplete);
+		MultiplayerSessionSubsystem->MultiplayerOnFindSessionComplete.AddUObject(this, &ThisClass::OnFindSessionComplete);
 	}
 }
 
@@ -38,7 +45,7 @@ void ULobbyMenuWidget::NativeDestruct()
 	Super::NativeDestruct();
 }
 
-void ULobbyMenuWidget::OnCreateSession(bool bWasSuccessful)
+void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 {
 	if (bWasSuccessful)
 	{
@@ -58,11 +65,40 @@ void ULobbyMenuWidget::OnCreateSession(bool bWasSuccessful)
 	}
 }
 
+void ULobbyMenuWidget::OnFindSessionComplete(const TArray<FOnlineSessionSearchResult>& SessionResults, bool bwasSuccessful)
+{
+	if(!bwasSuccessful || SessionResults.Num() <= 0)
+	{
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("No Session Found")));
+		}
+		return;
+	}
+
+	for(auto i : SessionResults)
+	{
+		FString tmp = i.GetSessionIdStr();
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, FString::Printf(TEXT("%s"), *tmp));
+		}
+	}
+}
+
 void ULobbyMenuWidget::HostButtonClicked()
 {
 	HostButton->SetIsEnabled(false);
 	if (MultiplayerSessionSubsystem)
 	{
 		MultiplayerSessionSubsystem->CreateSession(NumPublicConnections, MatchType);
+	}
+}
+
+void ULobbyMenuWidget::SearchButtonClicked()
+{
+	if(MultiplayerSessionSubsystem)
+	{
+		MultiplayerSessionSubsystem->FindSession(10);
 	}
 }
