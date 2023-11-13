@@ -25,11 +25,13 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void JoinButtonClicked();
+	void OnJoinSession(EOnJoinSessionCompleteResult::Type Result);
 
 	UPROPERTY(meta=(BindWidget))
 	UButton* RoomJoinBtn;
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* RoomNameText;
 
-	FString RoomID;
+	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
+	FOnlineSessionSearchResult Session;
 };

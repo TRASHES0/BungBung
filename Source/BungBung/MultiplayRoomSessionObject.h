@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "OnlineSessionSettings.h"
 #include "UObject/NoExportTypes.h"
 #include "MultiplayRoomSessionObject.generated.h"
 
@@ -15,7 +16,6 @@ class BUNGBUNG_API UMultiplayRoomSessionObject : public UObject
 	GENERATED_BODY()
 	
 public:
-	FString SessionName;
-	FUniqueNetIdPtr SessionId;
+	FOnlineSessionSearchResult Session;
 	
 };

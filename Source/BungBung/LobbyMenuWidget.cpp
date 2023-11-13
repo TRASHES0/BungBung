@@ -81,10 +81,13 @@ void ULobbyMenuWidget::OnFindSessionComplete(const TArray<FOnlineSessionSearchRe
 	}
 	for(auto S : SessionResults)
 	{
+		SessionObject = NewObject<UMultiplayRoomSessionObject>();
+		if(SessionObject)
+		{
+			SessionObject->Session = S;
+		}
 		if(MultiplayListView)
 		{
-			SessionObject->SessionId = S.Session.OwningUserId;
-			SessionObject->SessionName = S.Session.OwningUserName;
 			MultiplayListView->AddItem(SessionObject);
 		}
 	}

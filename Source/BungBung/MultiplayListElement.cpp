@@ -13,8 +13,18 @@ void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 	const UMultiplayRoomSessionObject* Item = Cast<UMultiplayRoomSessionObject>(ListItemObject);
 	if(Item == nullptr) return;
 
+	Session = Item->Session;
+
+	UGameInstance* GameInstance = GetGameInstance();
+	if (GameInstance)
+		MultiplayerSessionSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionSubsystem>();
+
+	// Binding callbacks to Delegates of the MultiplayerSessionSubsystem class
+	if (MultiplayerSessionSubsystem)
+		MultiplayerSessionSubsystem->MultiplayerOnJoinSessionComplete.AddUObject(this, &ThisClass::OnJoinSession);
+
 	if(RoomNameText)
-		RoomNameText->SetText(FText::FromString(Item->SessionName));
+		RoomNameText->SetText(FText::FromString(Session.Session.OwningUserName));
 
 	if(RoomJoinBtn)
 	{
@@ -24,5 +34,21 @@ void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 
 void UMultiplayListElement::JoinButtonClicked()
 {
-	
+	if(GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("Join Clicked")));
+	}
+	if(MultiplayerSessionSubsystem)
+	{
+		MultiplayerSessionSubsystem->JoinSession(Session);
+	}
+}
+
+void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
+{
+	FString tmp = Session.Session.OwningUserName;
+	if(GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString::Printf(TEXT("To %s"), *tmp));
+	}
 }
