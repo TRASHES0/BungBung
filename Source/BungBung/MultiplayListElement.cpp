@@ -46,9 +46,35 @@ void UMultiplayListElement::JoinButtonClicked()
 
 void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
 {
+	
 	FString tmp = Session.Session.OwningUserName;
 	if(GEngine)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString::Printf(TEXT("To %s"), *tmp));
+	}
+	
+	// SessionInterface
+	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
+	if(Subsystem)
+	{
+		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
+		if(SessionInterface.IsValid())
+		{
+			//Join Session
+			FString Address;
+			if(SessionInterface->GetResolvedConnectString(NAME_GameSession, Address))
+			{
+				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
+				if(PlayerController)
+				{
+					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+				}
+			}
+		}
+	}
+
+	if(Result != EOnJoinSessionCompleteResult::Success)
+	{
+		RoomJoinBtn->SetIsEnabled(true);
 	}
 }

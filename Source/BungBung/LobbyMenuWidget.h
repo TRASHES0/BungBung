@@ -46,4 +46,5 @@ protected:
 
 private:
 	UMultiplayRoomSessionObject* SessionObject;
+	void MenuTearDown();
 };

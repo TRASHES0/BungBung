@@ -42,6 +42,7 @@ void ULobbyMenuWidget::NativeConstruct()
 
 void ULobbyMenuWidget::NativeDestruct()
 {
+	MenuTearDown();
 	Super::NativeDestruct();
 }
 
@@ -52,6 +53,11 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, FString(TEXT("Session created successfully!")));
+		}
+		UWorld* World = GetWorld();
+		if(World)
+		{
+			World->ServerTravel("/Game/Map/TestLand?listen");
 		}
 	}
 	else
@@ -107,5 +113,21 @@ void ULobbyMenuWidget::SearchButtonClicked()
 	if(MultiplayerSessionSubsystem)
 	{
 		MultiplayerSessionSubsystem->FindSession(10);
+	}
+}
+
+void ULobbyMenuWidget::MenuTearDown()
+{
+	RemoveFromParent();
+	UWorld* World = GetWorld();
+	if(World)
+	{
+		APlayerController* PlayerController =World->GetFirstPlayerController();
+		if(PlayerController)
+		{
+			FInputModeGameOnly InputModeData;
+			PlayerController->SetInputMode(InputModeData);
+			PlayerController->SetShowMouseCursor(false);
+		}
 	}
 }
