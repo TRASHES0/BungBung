@@ -78,7 +78,7 @@ void ULobbyMenuWidget::OnFindSessionComplete(const TArray<FOnlineSessionSearchRe
 
 	for(auto i : SessionResults)
 	{
-		FString tmp = i.GetSessionIdStr();
+		FString tmp = i.Session.OwningUserName;
 		if(GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, FString::Printf(TEXT("%s"), *tmp));
