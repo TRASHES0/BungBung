@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ListView.h"
-#include "MultiplayerSessionSubsystem.h"
 #include "MultiplayListView.generated.h"
 
 /**
@@ -18,5 +17,4 @@ class BUNGBUNG_API UMultiplayListView : public UListView
 public:
 	UPROPERTY(meta=(BindWidget))
 	TObjectPtr<UListView> MultiplayRoomList;
-	
 };

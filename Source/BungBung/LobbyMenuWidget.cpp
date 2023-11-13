@@ -67,6 +67,10 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 
 void ULobbyMenuWidget::OnFindSessionComplete(const TArray<FOnlineSessionSearchResult>& SessionResults, bool bwasSuccessful)
 {
+	if(MultiplayListView)
+	{
+		MultiplayListView->ClearListItems();
+	}
 	if(!bwasSuccessful || SessionResults.Num() <= 0)
 	{
 		if(GEngine)
@@ -75,13 +79,13 @@ void ULobbyMenuWidget::OnFindSessionComplete(const TArray<FOnlineSessionSearchRe
 		}
 		return;
 	}
-
-	for(auto i : SessionResults)
+	for(auto S : SessionResults)
 	{
-		FString tmp = i.Session.OwningUserName;
-		if(GEngine)
+		if(MultiplayListView)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Green, FString::Printf(TEXT("%s"), *tmp));
+			SessionObject->SessionId = S.Session.OwningUserId;
+			SessionObject->SessionName = S.Session.OwningUserName;
+			MultiplayListView->AddItem(SessionObject);
 		}
 	}
 }

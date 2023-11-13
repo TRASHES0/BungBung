@@ -30,4 +30,6 @@ protected:
 	UButton* RoomJoinBtn;
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* RoomNameText;
+
+	FString RoomID;
 };

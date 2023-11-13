@@ -5,8 +5,9 @@
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
 #include "MultiplayerSessionSubsystem.h"
+#include "MultiplayListView.h"
+#include "MultiplayRoomSessionObject.h"
 #include "Components/Button.h"
-#include "Components/ListView.h"
 #include "LobbyMenuWidget.generated.h"
 
 /**
@@ -28,7 +29,7 @@ protected:
 	UPROPERTY(meta=(BindWidget))
 	UButton* SearchButton;
 	UPROPERTY(meta=(BindWidget))
-	UListView* MultiplayListView;
+	UMultiplayListView* MultiplayListView;
 	
 	virtual bool Initialize() override;
 	virtual void NativeConstruct() override;
@@ -42,4 +43,7 @@ protected:
 	void HostButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void SearchButtonClicked();
+
+private:
+	UMultiplayRoomSessionObject* SessionObject;
 };

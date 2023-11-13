@@ -3,11 +3,18 @@
 
 #include "MultiplayListElement.h"
 
+#include "MultiplayRoomSessionObject.h"
 #include "OnlineSubsystem.h"
 
 void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 {
 	IUserObjectListEntry::NativeOnListItemObjectSet(ListItemObject);
+
+	const UMultiplayRoomSessionObject* Item = Cast<UMultiplayRoomSessionObject>(ListItemObject);
+	if(Item == nullptr) return;
+
+	if(RoomNameText)
+		RoomNameText->SetText(FText::FromString(Item->SessionName));
 
 	if(RoomJoinBtn)
 	{
