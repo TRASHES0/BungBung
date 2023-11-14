@@ -32,6 +32,9 @@ protected:
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* RoomNameText;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Widget)
+	TSubclassOf<UUserWidget> RoomWidget;
+
 	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
 	FOnlineSessionSearchResult Session;
 };
