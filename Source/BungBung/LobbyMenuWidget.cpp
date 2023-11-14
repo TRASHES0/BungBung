@@ -49,13 +49,10 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, FString(TEXT("Session created successfully!")));
 		}
-		if(RoomWidget)
+		UWorld* World = GetWorld();
+		if(World)
 		{
-			UWorld* World = GetWorld();
-			if(World)
-			{
-				World->ServerTravel("/Game/Map/TestLand?listen");
-			}
+			World->ServerTravel("/Game/Map/TestLand?listen");
 		}
 	}
 	else
