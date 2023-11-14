@@ -51,8 +51,11 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		}
 		if(RoomWidget)
 		{
-			RemoveFromParent();
-			CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
+			UWorld* World = GetWorld();
+			if(World)
+			{
+				World->ServerTravel("/Game/Map/TestLand?listen");
+			}
 		}
 	}
 	else

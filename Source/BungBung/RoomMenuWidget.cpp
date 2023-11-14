@@ -11,12 +11,6 @@
 void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	// SessionInterface
-	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
-	if(Subsystem)
-	{
-	}
 	
 	if(StartButton)
 	{
@@ -26,11 +20,7 @@ void URoomMenuWidget::NativeConstruct()
 
 void URoomMenuWidget::StartButtonClicked()
 {
-	UWorld* World = GetWorld();
-	if(World)
-	{
-		World->ServerTravel("/Game/Map/TestLand?listen");
-	}
+	MenuTearDown();
 }
 
 void URoomMenuWidget::MenuTearDown()

@@ -68,11 +68,6 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 				if(PlayerController)
 				{
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
-					if(RoomWidget)
-					{
-						RemoveFromParent();
-						CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
-					}
 				}
 			}
 		}
