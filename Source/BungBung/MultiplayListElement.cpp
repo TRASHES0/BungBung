@@ -74,13 +74,16 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 			if(SessionInterface->GetResolvedConnectString(NAME_GameSession, Address))
 			{
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
-				if (GEngine)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
-				}
 				if(PlayerController)
 				{
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+				}
+			}
+			else
+			{
+				if (GEngine)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("failed to join")));
 				}
 			}
 		}
