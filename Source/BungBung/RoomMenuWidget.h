@@ -19,7 +19,7 @@ class BUNGBUNG_API URoomMenuWidget : public UUserWidget
 	virtual void NativeConstruct() override;
 
 public:
-	UMultiplayRoomSessionObject* ClientSession;
+	FOnlineSessionSearchResult ClientSession;
 
 protected:
 	UPROPERTY(meta=(BindWidget))

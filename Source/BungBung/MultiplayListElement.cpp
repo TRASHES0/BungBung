@@ -5,6 +5,8 @@
 
 #include "MultiplayRoomSessionObject.h"
 #include "OnlineSubsystem.h"
+#include "RoomMenuWidget.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 {
@@ -41,6 +43,12 @@ void UMultiplayListElement::JoinButtonClicked()
 	if(MultiplayerSessionSubsystem)
 	{
 		MultiplayerSessionSubsystem->JoinSession(Session);
+	}
+	if(RoomWidget)
+	{
+		Cast<URoomMenuWidget>(RoomWidget)->ClientSession = Session;
+		UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
+		CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
 	}
 }
 

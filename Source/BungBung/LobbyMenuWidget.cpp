@@ -26,6 +26,8 @@ void ULobbyMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	MatchType = "FreeForAll";
+
 	UGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
 	{
@@ -49,10 +51,10 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, FString(TEXT("Session created successfully!")));
 		}
-		UWorld* World = GetWorld();
-		if(World)
+		if(RoomWidget)
 		{
-			World->ServerTravel("/Game/Map/TestLand?listen");
+			RemoveFromParent();
+			CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
 		}
 	}
 	else
