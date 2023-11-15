@@ -71,7 +71,7 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 		{
 			//Join Session
 			FString Address;
-			if(SessionInterface->GetResolvedConnectString(NAME_GameSession, Address))
+			if(SessionInterface->GetResolvedConnectString(Session, NAME_GamePort, Address))
 			{
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
