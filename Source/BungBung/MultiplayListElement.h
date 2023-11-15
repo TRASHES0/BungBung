@@ -35,9 +35,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Widget)
 	TSubclassOf<UUserWidget> RoomWidget;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Widget)
-	TSubclassOf<UUserWidget> ParentWidget;
-
 	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
 	FOnlineSessionSearchResult Session;
 };

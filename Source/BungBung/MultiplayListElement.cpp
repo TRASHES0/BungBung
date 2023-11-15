@@ -50,7 +50,7 @@ void UMultiplayListElement::JoinButtonClicked()
 		UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 		tmp->AddToViewport();
 		if(Cast<URoomMenuWidget>(tmp))
-			Cast<URoomMenuWidget>(tmp)->GetSessionSearchResult(Session);
+			Cast<URoomMenuWidget>(tmp)->GetSessionSearchResult(Session);//PROBLEM
 	}
 }
 
