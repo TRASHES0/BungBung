@@ -12,16 +12,24 @@ void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
-	if(ClientSession.IsValid() && ClientSession.Session.OwningUserId->ToString() == *LocalPlayer->GetPreferredUniqueNetId()->ToString())
+	if(ClientSession.IsValid() )
 	{
-		if(StartButton)
-		{
-			if (GEngine)
+		if(ClientSession.Session.OwningUserId->ToString() == *LocalPlayer->GetPreferredUniqueNetId()->ToString())
+			if(StartButton)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("IS NOT MASTER CLIENT")));
+				if (GEngine)
+				{
+					GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("IS NOT MASTER CLIENT")));
+				}
+				StartButton->SetIsEnabled(false);
+				return;
 			}
-			StartButton->SetIsEnabled(false);
-			return;
+	}
+	else
+	{
+		if (GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("Session Not Valid")));
 		}
 	}
 	
