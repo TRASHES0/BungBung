@@ -78,7 +78,7 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 				{
 					if (GEngine)
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("Failed to create session!")));
+						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
 					}
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 				}
