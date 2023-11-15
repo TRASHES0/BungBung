@@ -76,6 +76,10 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
 				{
+					if (GEngine)
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
+					}
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 				}
 			}
