@@ -84,6 +84,13 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 				}
 			}
 		}
+		else
+		{
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("Failed to get session interface")));
+			}
+		}
 	}
 
 	if(Result != EOnJoinSessionCompleteResult::Success)
