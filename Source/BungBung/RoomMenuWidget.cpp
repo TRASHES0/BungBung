@@ -12,7 +12,7 @@ void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
-	if(ClientSession.IsValid() && ClientSession.Session.SessionInfo->GetSessionId() == *LocalPlayer->GetPreferredUniqueNetId())
+	if(ClientSession.IsValid() && ClientSession.Session.OwningUserId->ToString() == *LocalPlayer->GetPreferredUniqueNetId()->ToString())
 	{
 		if(StartButton)
 		{
