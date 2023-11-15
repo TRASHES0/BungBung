@@ -39,6 +39,11 @@ void URoomMenuWidget::NativeConstruct()
 	}
 }
 
+void URoomMenuWidget::GetSessionSearchResult(FOnlineSessionSearchResult& SearchResult)
+{
+	ClientSession = SearchResult;
+}
+
 void URoomMenuWidget::StartButtonClicked()
 {
 	MenuTearDown();
