@@ -16,6 +16,10 @@ void URoomMenuWidget::NativeConstruct()
 	{
 		if(StartButton)
 		{
+			if (GEngine)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("IS NOT MASTER CLIENT")));
+			}
 			StartButton->SetIsEnabled(false);
 			return;
 		}
