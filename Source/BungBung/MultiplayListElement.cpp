@@ -46,10 +46,11 @@ void UMultiplayListElement::JoinButtonClicked()
 	}
 	if(RoomWidget)
 	{
-		if(Cast<URoomMenuWidget>(RoomWidget))
-			Cast<URoomMenuWidget>(RoomWidget)->ClientSession = Session;
 		UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
-		CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
+		UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
+		tmp->AddToViewport();
+		if(Cast<URoomMenuWidget>(tmp))
+			Cast<URoomMenuWidget>(tmp)->ClientSession = Session;
 	}
 }
 
