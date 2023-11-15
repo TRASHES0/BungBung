@@ -46,7 +46,8 @@ void UMultiplayListElement::JoinButtonClicked()
 	}
 	if(RoomWidget)
 	{
-		Cast<URoomMenuWidget>(RoomWidget)->ClientSession = Session;
+		if(Cast<URoomMenuWidget>(RoomWidget))
+			Cast<URoomMenuWidget>(RoomWidget)->ClientSession = Session;
 		UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 		CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
 	}
