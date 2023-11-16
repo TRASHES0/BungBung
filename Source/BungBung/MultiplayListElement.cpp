@@ -26,7 +26,7 @@ void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 
 	if(CurrentPlayerCntText)
 	{
-		FString tmp = FString::Printf(TEXT("%d/%d"), Session.Session.NumOpenPublicConnections - Session.Session.SessionSettings.NumPublicConnections, Session.Session.NumOpenPublicConnections);
+		FString tmp = FString::Printf(TEXT("%d/%d"), Session.Session.SessionSettings.NumPublicConnections - Session.Session.NumOpenPublicConnections, Session.Session.SessionSettings.NumPublicConnections);
 		CurrentPlayerCntText->SetText(FText::FromString(tmp));
 	}
 	
