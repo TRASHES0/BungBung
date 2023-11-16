@@ -177,8 +177,12 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
 				{
+					if(GEngine)
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, Address);
+					}
 					MenuTearDown();
-					PlayerController->ClientTravel(Address + "/Game/Map/TestLand?listen", TRAVEL_Absolute);
+					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 					/*
 					if(RoomWidget)
 					{
