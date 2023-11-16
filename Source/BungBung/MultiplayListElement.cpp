@@ -27,29 +27,7 @@ void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 
 	if(RoomNameText)
 		RoomNameText->SetText(FText::FromString(Session.Session.OwningUserName));
-
-	if(RoomJoinBtn)
-	{
-		RoomJoinBtn->OnClicked.AddDynamic(this, &UMultiplayListElement::JoinButtonClicked);
-	}
-}
-
-void UMultiplayListElement::JoinButtonClicked()
-{
-	if(GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("Join Clicked")));
-	}
-	if(MultiplayerSessionSubsystem)
-	{
-		MultiplayerSessionSubsystem->JoinSession(Session, "Test Session");
-	}
-	if(RoomWidget)
-	{
-		UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
-		UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
-		tmp->AddToViewport();
-	}
+	
 }
 
 void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
@@ -82,18 +60,6 @@ void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Res
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 				}
 			}
-			else
-			{
-				if (GEngine)
-				{
-					GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, FString(TEXT("failed to join")));
-				}
-			}
 		}
-	}
-
-	if(Result != EOnJoinSessionCompleteResult::Success)
-	{
-		RoomJoinBtn->SetIsEnabled(true);
 	}
 }

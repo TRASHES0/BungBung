@@ -5,6 +5,7 @@
 
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
+#include "Blueprint/WidgetLayoutLibrary.h"
 
 
 bool ULobbyMenuWidget::Initialize()
@@ -75,6 +76,7 @@ void ULobbyMenuWidget::OnFindSessionComplete(const TArray<FOnlineSessionSearchRe
 	if(MultiplayListView)
 	{
 		MultiplayListView->ClearListItems();
+		MultiplayListView->OnItemClicked().AddUObject(this, &ULobbyMenuWidget::RoomClicked);
 	}
 	if(!bwasSuccessful || SessionResults.Num() <= 0)
 	{
@@ -103,7 +105,7 @@ void ULobbyMenuWidget::HostButtonClicked()
 	HostButton->SetIsEnabled(false);
 	if (MultiplayerSessionSubsystem)
 	{
-		MultiplayerSessionSubsystem->CreateSession(NumPublicConnections, MatchType, FName(TEXT("Test Session")));
+		MultiplayerSessionSubsystem->CreateSession(NumPublicConnections, MatchType);
 	}
 }
 
@@ -112,5 +114,28 @@ void ULobbyMenuWidget::SearchButtonClicked()
 	if(MultiplayerSessionSubsystem)
 	{
 		MultiplayerSessionSubsystem->FindSession(10);
+	}
+}
+
+void ULobbyMenuWidget::RoomClicked(UObject* Obj)
+{
+	UMultiplayRoomSessionObject* pData = Cast<UMultiplayRoomSessionObject>(Obj);
+
+	if(pData)
+	{
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("Join Clicked")));
+		}
+		if(MultiplayerSessionSubsystem)
+		{
+			MultiplayerSessionSubsystem->JoinSession(pData->Session);
+		}
+		if(RoomWidget)
+		{
+			RemoveFromParent();
+			UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
+			tmp->AddToViewport();
+		}
 	}
 }

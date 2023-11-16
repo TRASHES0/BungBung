@@ -22,18 +22,13 @@ class BUNGBUNG_API UMultiplayListElement : public UUserWidget, public IUserObjec
 
 protected:
 	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
-
+	
 	UFUNCTION(BlueprintCallable)
 	void JoinButtonClicked();
 	void OnJoinSession(EOnJoinSessionCompleteResult::Type Result);
-
-	UPROPERTY(meta=(BindWidget))
-	UButton* RoomJoinBtn;
+	
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* RoomNameText;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Widget)
-	TSubclassOf<UUserWidget> RoomWidget;
 
 	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
 	FOnlineSessionSearchResult Session;

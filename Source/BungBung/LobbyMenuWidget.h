@@ -46,6 +46,8 @@ protected:
 	void HostButtonClicked();
 	UFUNCTION(BlueprintCallable)
 	void SearchButtonClicked();
+	UFUNCTION(BlueprintCallable)
+	void RoomClicked(UObject* Obj);
 
 private:
 	UMultiplayRoomSessionObject* SessionObject;
