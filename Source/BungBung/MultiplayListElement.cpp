@@ -42,7 +42,7 @@ void UMultiplayListElement::JoinButtonClicked()
 	}
 	if(MultiplayerSessionSubsystem)
 	{
-		MultiplayerSessionSubsystem->JoinSession(Session, NAME_GameSession);
+		MultiplayerSessionSubsystem->JoinSession(Session, "Test Session");
 	}
 	if(RoomWidget)
 	{
