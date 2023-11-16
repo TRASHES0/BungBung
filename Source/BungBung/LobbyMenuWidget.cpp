@@ -5,6 +5,7 @@
 
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
+#include "OnlineSubsystemSteam.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 
 
@@ -172,7 +173,7 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 		{
 			//Join Session
 			FString Address;
-			if(SessionInterface->GetResolvedConnectString(SelectedSession, NAME_GamePort, Address))
+			if(SessionInterface->GetResolvedConnectString(SelectedSession, "GameServerQueryPort", Address))
 			{
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
