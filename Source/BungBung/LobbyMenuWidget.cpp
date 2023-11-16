@@ -55,12 +55,20 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, FString(TEXT("Session created successfully!")));
 		}
+		MenuTearDown();
+		UWorld* World = GetWorld();
+		if(World)
+		{
+			World->ServerTravel("/Game/Map/TestLand?listen");
+		}
+		/*
 		if(RoomWidget)
 		{
 			RemoveFromParent();
 			UUserWidget* Room = CreateWidget(GetWorld(), RoomWidget);
 			Room->AddToViewport();
 		}
+		*/
 	}
 	else
 	{
@@ -137,6 +145,22 @@ void ULobbyMenuWidget::RoomClicked(UObject* Obj)
 	}
 }
 
+void ULobbyMenuWidget::MenuTearDown()
+{
+	RemoveFromParent();
+	UWorld* World = GetWorld();
+	if(World)
+	{
+		APlayerController* PlayerController =World->GetFirstPlayerController();
+		if(PlayerController)
+		{
+			FInputModeGameOnly InputModeData;
+			PlayerController->SetInputMode(InputModeData);
+			PlayerController->SetShowMouseCursor(false);
+		}
+	}
+}
+
 void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type Result)
 {
 	// SessionInterface
@@ -153,13 +177,16 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
 				{
-					PlayerController->ClientTravel(Address, TRAVEL_Relative, true);
+					MenuTearDown();
+					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+					/*
 					if(RoomWidget)
 					{
 						RemoveFromParent();
 						UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 						tmp->AddToViewport();
 					}
+					*/
 				}
 			}
 		}

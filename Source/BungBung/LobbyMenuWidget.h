@@ -51,6 +51,7 @@ protected:
 	void RoomClicked(UObject* Obj);
 
 private:
+	void MenuTearDown();
 	UMultiplayRoomSessionObject* SessionObject;
 	FOnlineSessionSearchResult SelectedSession;
 };
