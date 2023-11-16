@@ -157,7 +157,7 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 					{
 						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
 					}
-					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+					PlayerController->ClientTravel(Address, TRAVEL_Absolute, true);
 					if(RoomWidget)
 					{
 						RemoveFromParent();
