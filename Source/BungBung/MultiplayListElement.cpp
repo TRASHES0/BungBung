@@ -49,8 +49,6 @@ void UMultiplayListElement::JoinButtonClicked()
 		UWidgetLayoutLibrary::RemoveAllWidgets(GetWorld());
 		UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 		tmp->AddToViewport();
-		if(Cast<URoomMenuWidget>(tmp))
-			Cast<URoomMenuWidget>(tmp)->GetSessionSearchResult(Session);//PROBLEM
 	}
 }
 

@@ -18,10 +18,6 @@ class BUNGBUNG_API URoomMenuWidget : public UUserWidget
 
 	virtual void NativeConstruct() override;
 
-public:
-	FOnlineSessionSearchResult ClientSession;
-	void GetSessionSearchResult(FOnlineSessionSearchResult& SearchResult);
-
 protected:
 	UPROPERTY(meta=(BindWidget))
 	UButton* StartButton;

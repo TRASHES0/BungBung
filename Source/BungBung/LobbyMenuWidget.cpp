@@ -4,6 +4,7 @@
 #include "LobbyMenuWidget.h"
 
 #include "OnlineSessionSettings.h"
+#include "OnlineSubsystem.h"
 
 
 bool ULobbyMenuWidget::Initialize()
@@ -54,7 +55,8 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		if(RoomWidget)
 		{
 			RemoveFromParent();
-			CreateWidget(GetWorld(), RoomWidget)->AddToViewport();
+			UUserWidget* Room = CreateWidget(GetWorld(), RoomWidget);
+			Room->AddToViewport();
 		}
 	}
 	else
