@@ -25,6 +25,9 @@ protected:
 	
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* RoomNameText;
+	UPROPERTY(meta=(BindWidget))
+	UTextBlock* CurrentPlayerCntText;
+	
 
 	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
 	FOnlineSessionSearchResult Session;
