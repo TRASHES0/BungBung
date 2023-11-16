@@ -4,7 +4,6 @@
 #include "MultiplayListElement.h"
 
 #include "MultiplayRoomSessionObject.h"
-#include "OnlineSubsystem.h"
 #include "RoomMenuWidget.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 
@@ -21,45 +20,7 @@ void UMultiplayListElement::NativeOnListItemObjectSet(UObject* ListItemObject)
 	if (GameInstance)
 		MultiplayerSessionSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionSubsystem>();
 
-	// Binding callbacks to Delegates of the MultiplayerSessionSubsystem class
-	if (MultiplayerSessionSubsystem)
-		MultiplayerSessionSubsystem->MultiplayerOnJoinSessionComplete.AddUObject(this, &ThisClass::OnJoinSession);
-
 	if(RoomNameText)
 		RoomNameText->SetText(FText::FromString(Session.Session.OwningUserName));
 	
-}
-
-void UMultiplayListElement::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
-{
-	
-	FString tmp = Session.Session.OwningUserName;
-	if(GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString::Printf(TEXT("To %s"), *tmp));
-	}
-	
-	// SessionInterface
-	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
-	if(Subsystem)
-	{
-		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
-		if(SessionInterface.IsValid())
-		{
-			//Join Session
-			FString Address;
-			if(SessionInterface->GetResolvedConnectString(Session, NAME_GamePort, Address))
-			{
-				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
-				if(PlayerController)
-				{
-					if (GEngine)
-					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
-					}
-					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
-				}
-			}
-		}
-	}
 }

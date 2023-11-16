@@ -18,6 +18,9 @@ class BUNGBUNG_API URoomMenuWidget : public UUserWidget
 
 	virtual void NativeConstruct() override;
 
+public:
+	void GetSession();
+
 protected:
 	UPROPERTY(meta=(BindWidget))
 	UButton* StartButton;

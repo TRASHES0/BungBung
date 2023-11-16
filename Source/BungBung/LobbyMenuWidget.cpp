@@ -129,6 +129,7 @@ void ULobbyMenuWidget::RoomClicked(UObject* Obj)
 		}
 		if(MultiplayerSessionSubsystem)
 		{
+			SelectedSession = pData->Session;
 			MultiplayerSessionSubsystem->JoinSession(pData->Session);
 		}
 		if(RoomWidget)
@@ -139,3 +140,31 @@ void ULobbyMenuWidget::RoomClicked(UObject* Obj)
 		}
 	}
 }
+
+void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type Result)
+{
+	// SessionInterface
+	IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
+	if(Subsystem)
+	{
+		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
+		if(SessionInterface.IsValid())
+		{
+			//Join Session
+			FString Address;
+			if(SessionInterface->GetResolvedConnectString(SelectedSession, NAME_GamePort, Address))
+			{
+				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
+				if(PlayerController)
+				{
+					if (GEngine)
+					{
+						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
+					}
+					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+				}
+			}
+		}
+	}
+}
+

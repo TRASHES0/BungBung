@@ -41,6 +41,7 @@ protected:
 	UFUNCTION()
 	void OnCreateSessionComplete(bool bWasSuccessful);
 	void OnFindSessionComplete(const TArray<FOnlineSessionSearchResult>& SessionResults, bool bwasSuccessful);
+	void OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type Result);
 
 	UFUNCTION(BlueprintCallable)
 	void HostButtonClicked();
@@ -51,4 +52,5 @@ protected:
 
 private:
 	UMultiplayRoomSessionObject* SessionObject;
+	FOnlineSessionSearchResult SelectedSession;
 };
