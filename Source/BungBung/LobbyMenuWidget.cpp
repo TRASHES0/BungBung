@@ -29,6 +29,7 @@ void ULobbyMenuWidget::NativeConstruct()
 	Super::NativeConstruct();
 
 	MatchType = "FreeForAll";
+	NumPublicConnections = 4;
 
 	UGameInstance* GameInstance = GetGameInstance();
 	if (GameInstance)
