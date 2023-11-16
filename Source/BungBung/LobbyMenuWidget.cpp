@@ -178,7 +178,7 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 				if(PlayerController)
 				{
 					MenuTearDown();
-					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+					PlayerController->ClientTravel(Address + "/Game/Map/TestLand?listen", TRAVEL_Absolute);
 					/*
 					if(RoomWidget)
 					{
