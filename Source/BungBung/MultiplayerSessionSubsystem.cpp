@@ -24,12 +24,12 @@ UMultiplayerSessionSubsystem::UMultiplayerSessionSubsystem()
 	}
 }
 
-void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections, FString MatchType)
+void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections, FString MatchType, FName SessionName)
 {
 	if (!SessionInterface.IsValid())
 		return;
 
-	auto ExistingSession = SessionInterface->GetNamedSession(NAME_GameSession);
+	auto ExistingSession = SessionInterface->GetNamedSession(SessionName);
 	if (ExistingSession != nullptr)
 	{
 		bCreateSessionOnDestroy = true;
@@ -56,7 +56,7 @@ void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections, FSt
 
 	// Create Session
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
-	if (!SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, *LastSessionSettings))
+	if (!SessionInterface->CreateSession(*LocalPlayer->GetPreferredUniqueNetId(), SessionName, *LastSessionSettings))
 	{
 		// Remove the delegate from the delegate list using the handle.
 		SessionInterface->ClearOnCreateSessionCompleteDelegate_Handle(CreateSessionCompleteDelegateHandle);
@@ -79,7 +79,7 @@ void UMultiplayerSessionSubsystem::FindSession(int32 MaxSearchResults)
 	LastSessionSearch->MaxSearchResults = MaxSearchResults;
 	LastSessionSearch->bIsLanQuery = IOnlineSubsystem::Get()->GetSubsystemName() == "NULL" ? true : false; 
 	LastSessionSearch->QuerySettings.Set(SEARCH_PRESENCE, true, EOnlineComparisonOp::Equals);
-
+	
 	// Find sessions
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
 	if (!SessionInterface->FindSessions(*LocalPlayer->GetPreferredUniqueNetId(), LastSessionSearch.ToSharedRef()))
@@ -92,7 +92,7 @@ void UMultiplayerSessionSubsystem::FindSession(int32 MaxSearchResults)
 
 }
 
-void UMultiplayerSessionSubsystem::JoinSession(const FOnlineSessionSearchResult& SessionResult)
+void UMultiplayerSessionSubsystem::JoinSession(const FOnlineSessionSearchResult& SessionResult, FName SessionName)
 {
 	if (!SessionInterface.IsValid())
 	{
@@ -102,9 +102,9 @@ void UMultiplayerSessionSubsystem::JoinSession(const FOnlineSessionSearchResult&
 
 	// Add JoinSessionCompleteDelegate to the session interface delegate list.
 	JoinSessionCompleteDelegateHandle = SessionInterface->AddOnJoinSessionCompleteDelegate_Handle(JoinSessionCompleteDelegate);
-
+	
 	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
-	if (!SessionInterface->JoinSession(*LocalPlayer->GetPreferredUniqueNetId(), NAME_GameSession, SessionResult))
+	if (!SessionInterface->JoinSession(*LocalPlayer->GetPreferredUniqueNetId(), SessionName, SessionResult))
 	{
 		// Clear the delegate from the delegate list
 		SessionInterface->ClearOnJoinSessionCompleteDelegate_Handle(JoinSessionCompleteDelegateHandle);
@@ -196,7 +196,7 @@ void UMultiplayerSessionSubsystem::OnDestroySessionComplete(FName SessionName, b
 	if (bWasSuccessful && bCreateSessionOnDestroy)
 	{
 		bCreateSessionOnDestroy = false;
-		CreateSession(LastNumPublicConnections, LastMatchType);
+		CreateSession(LastNumPublicConnections, LastMatchType, SessionName);
 	}
 
 	MultiplayerOnDestroySessionComplete.Broadcast(bWasSuccessful);

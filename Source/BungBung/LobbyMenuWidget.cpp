@@ -103,7 +103,7 @@ void ULobbyMenuWidget::HostButtonClicked()
 	HostButton->SetIsEnabled(false);
 	if (MultiplayerSessionSubsystem)
 	{
-		MultiplayerSessionSubsystem->CreateSession(NumPublicConnections, MatchType);
+		MultiplayerSessionSubsystem->CreateSession(NumPublicConnections, MatchType, FName(TEXT("Test Session")));
 	}
 }
 

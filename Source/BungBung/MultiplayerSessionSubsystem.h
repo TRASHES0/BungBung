@@ -30,9 +30,9 @@ public:
 	// ----------------------------------------------------------------
 	// To handle session functionality. The Menu class will call these 
 	// ----------------------------------------------------------------
-	void CreateSession(int32 NumPublicConnections, FString MatchType);
+	void CreateSession(int32 NumPublicConnections, FString MatchType, FName SessionName);
 	void FindSession(int32 MaxSearchResults);
-	void JoinSession(const FOnlineSessionSearchResult& SessionResult);
+	void JoinSession(const FOnlineSessionSearchResult& SessionResult, FName SessionName);
 	void StartSession();
 	void DestroySession();
 
