@@ -133,12 +133,6 @@ void ULobbyMenuWidget::RoomClicked(UObject* Obj)
 			SelectedSession = pData->Session;
 			MultiplayerSessionSubsystem->JoinSession(pData->Session);
 		}
-		if(RoomWidget)
-		{
-			RemoveFromParent();
-			UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
-			tmp->AddToViewport();
-		}
 	}
 }
 
@@ -163,6 +157,12 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
 					}
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+					if(RoomWidget)
+					{
+						RemoveFromParent();
+						UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
+						tmp->AddToViewport();
+					}
 				}
 			}
 		}
