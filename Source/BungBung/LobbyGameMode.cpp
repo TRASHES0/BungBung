@@ -56,7 +56,7 @@ void ALobbyGameMode::Logout(AController* Exiting)
 		GEngine->AddOnScreenDebugMessage
 		(
 			-1,
-			60.f,
+			15.f,
 			FColor::Cyan,
 			FString::Printf(TEXT("%s has Exited Game! "), *Playername)
 		);
