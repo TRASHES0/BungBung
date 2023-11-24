@@ -29,7 +29,7 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 			GEngine->AddOnScreenDebugMessage
 			(
 				-1,
-				60.f,
+				15.f,
 				FColor::Cyan,
 				FString::Printf(TEXT("%s has Joined Game! "), *Playername)
 
