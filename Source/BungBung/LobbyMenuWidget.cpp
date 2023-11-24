@@ -169,6 +169,8 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
 		if(SessionInterface.IsValid())
 		{
+			MenuTearDown();
+			UGameplayStatics::OpenLevel(this, "/Game/Map/TestLand");
 			//Join Session
 			FString Address;
 			if(SessionInterface->GetResolvedConnectString(SelectedSession, NAME_GamePort, Address))
@@ -180,7 +182,6 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 					{
 						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("Connect IP:%s"), *Address));
 					}
-					UGameplayStatics::OpenLevel(this, "/Game/Map/TestLand");
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 					/*
 					if(RoomWidget)
