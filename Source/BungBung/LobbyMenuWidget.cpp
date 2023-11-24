@@ -179,7 +179,6 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 					{
 						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, Address);
 					}
-					MenuTearDown();
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 					if(RoomWidget)
 					{
