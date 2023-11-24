@@ -11,7 +11,15 @@
 void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	const ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController();
+	UWorld* World = GetWorld();
+	if(World)
+	{
+		APlayerController* PlayerController = World->GetFirstPlayerController();
+		if(PlayerController)
+		{
+			PlayerController->SetShowMouseCursor(true);
+		}
+	}
 	
 	if(StartButton)
 	{
