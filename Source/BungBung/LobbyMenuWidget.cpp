@@ -6,6 +6,7 @@
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 
 bool ULobbyMenuWidget::Initialize()
@@ -179,13 +180,16 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 					{
 						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("Connect IP:%s"), *Address));
 					}
+					UGameplayStatics::OpenLevel(this, "/Game/Map/TestLand");
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+					/*
 					if(RoomWidget)
 					{
 						RemoveFromParent();
 						UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 						tmp->AddToViewport();
-					} 
+					}
+					*/
 				}
 			}
 		}
