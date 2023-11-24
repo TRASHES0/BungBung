@@ -11,7 +11,7 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 	Super::PostLogin(NewPlayer);
 	if (GameState)
 	{
-		int32 NumberOfPlayers= GameState->PlayerArray.Num();
+		int32 NumberOfPlayers= GameState.Get()->PlayerArray.Num();
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage
