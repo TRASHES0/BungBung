@@ -175,9 +175,9 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
 				{
-					if(GEngine)
+					if (GEngine)
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, Address);
+						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("Connect IP:%s"), *Address));
 					}
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
 					if(RoomWidget)

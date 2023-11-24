@@ -114,10 +114,6 @@ void UMultiplayerSessionSubsystem::JoinSession(const FOnlineSessionSearchResult&
 
 }
 
-void UMultiplayerSessionSubsystem::StartSession()
-{
-}
-
 void UMultiplayerSessionSubsystem::DestroySession()
 {
 	if (!SessionInterface.IsValid())
@@ -180,10 +176,6 @@ void UMultiplayerSessionSubsystem::OnJoinSessionComplete(FName SessionName, EOnJ
 
 	// Broadcast a message for the session joining with the result.
 	MultiplayerOnJoinSessionComplete.Broadcast(Result);
-}
-
-void UMultiplayerSessionSubsystem::OnStartSessionComplete(FName SessionName, bool bWasSuccessful)
-{
 }
 
 void UMultiplayerSessionSubsystem::OnDestroySessionComplete(FName SessionName, bool bWasSuccessful)
