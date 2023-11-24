@@ -5,7 +5,6 @@
 
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
-#include "OnlineSubsystemSteam.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
 
 
@@ -62,14 +61,12 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		{
 			World->ServerTravel("/Game/Map/TestLand?listen");
 		}
-		/*
 		if(RoomWidget)
 		{
 			RemoveFromParent();
 			UUserWidget* Room = CreateWidget(GetWorld(), RoomWidget);
 			Room->AddToViewport();
 		}
-		*/
 	}
 	else
 	{
@@ -173,7 +170,7 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 		{
 			//Join Session
 			FString Address;
-			if(SessionInterface->GetResolvedConnectString(SelectedSession, "GameServerQueryPort", Address))
+			if(SessionInterface->GetResolvedConnectString(SelectedSession, NAME_GamePort, Address))
 			{
 				APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
 				if(PlayerController)
@@ -184,14 +181,12 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 					}
 					MenuTearDown();
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
-					/*
 					if(RoomWidget)
 					{
 						RemoveFromParent();
 						UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 						tmp->AddToViewport();
-					}
-					*/
+					} 
 				}
 			}
 		}
