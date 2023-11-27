@@ -6,6 +6,7 @@
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "Kismet/GameplayStatics.h"
 
 
 bool ULobbyMenuWidget::Initialize()
@@ -54,6 +55,12 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		if (GEngine)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Yellow, FString(TEXT("Session created successfully!")));
+		}
+		MenuTearDown();
+		UWorld* World = GetWorld();
+		if(World)
+		{
+			World->ServerTravel("/Game/Map/TestLand?listen");
 		}
 		if(RoomWidget)
 		{
@@ -137,6 +144,22 @@ void ULobbyMenuWidget::RoomClicked(UObject* Obj)
 	}
 }
 
+void ULobbyMenuWidget::MenuTearDown()
+{
+	RemoveFromParent();
+	UWorld* World = GetWorld();
+	if(World)
+	{
+		APlayerController* PlayerController =World->GetFirstPlayerController();
+		if(PlayerController)
+		{
+			FInputModeGameOnly InputModeData;
+			PlayerController->SetInputMode(InputModeData);
+			PlayerController->SetShowMouseCursor(false);
+		}
+	}
+}
+
 void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type Result)
 {
 	// SessionInterface
@@ -146,6 +169,8 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
 		if(SessionInterface.IsValid())
 		{
+			MenuTearDown();
+			UGameplayStatics::OpenLevel(this, "/Game/Map/TestLand");
 			//Join Session
 			FString Address;
 			if(SessionInterface->GetResolvedConnectString(SelectedSession, NAME_GamePort, Address))
@@ -155,15 +180,17 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 				{
 					if (GEngine)
 					{
-						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Address);
+						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("Connect IP:%s"), *Address));
 					}
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
+					/*
 					if(RoomWidget)
 					{
 						RemoveFromParent();
 						UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 						tmp->AddToViewport();
 					}
+					*/
 				}
 			}
 		}
