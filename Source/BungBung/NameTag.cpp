@@ -7,10 +7,11 @@
 void UNameTag::NativeConstruct()
 {
 	Super::NativeConstruct();
-	APlayerController* PC = GetWorld()->GetFirstPlayerController();
-	if(APlayerState* PS = PC->GetPlayerState<APlayerState>())
+	ULocalPlayer* PC = GetWorld()->GetFirstLocalPlayerFromController();
+	
+	if(PC)
 	{
-		FString Name = PS->GetPlayerName();
+		FString Name = PC->GetNickname();
 		if(NameTagText)
 			NameTagText->SetText(FText::FromString(Name));
 	}
