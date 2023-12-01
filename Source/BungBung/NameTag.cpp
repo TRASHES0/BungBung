@@ -11,10 +11,6 @@ void UNameTag::NativeConstruct()
 	if(APlayerState* PS = PC->GetPlayerState<APlayerState>())
 	{
 		FString Name = PS->GetPlayerName();
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, Name);
-		}
 		if(NameTagText)
 			NameTagText->SetText(FText::FromString(Name));
 	}
