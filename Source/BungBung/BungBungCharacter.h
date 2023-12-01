@@ -74,5 +74,7 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	UWidgetComponent* NameTag;
+	class UWidgetComponent* NameTagFront;
+	UPROPERTY(EditAnywhere)
+	class UWidgetComponent* NameTagBack;
 };
