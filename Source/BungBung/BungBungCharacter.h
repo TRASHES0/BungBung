@@ -53,9 +53,9 @@ protected:
 	void Look(const FInputActionValue& Value);
 	
 	/** Called for Sprint input */
-	UFUNCTION()
+	UFUNCTION(Server, Reliable)
 	void Sprint(const FInputActionValue& Value);
-	UFUNCTION()
+	UFUNCTION(Server, Reliable)
 	void StopSprint(const FInputActionValue& Value);
 			
 
@@ -74,7 +74,5 @@ public:
 
 private:
 	UPROPERTY(EditAnywhere)
-	class UWidgetComponent* NameTagFront;
-	UPROPERTY(EditAnywhere)
-	class UWidgetComponent* NameTagBack;
+	class UWidgetComponent* NameTag;
 };

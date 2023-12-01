@@ -8,6 +8,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "NameTag.h"
 
 // Sets default values
 ABungBungCharacter::ABungBungCharacter()
@@ -43,10 +44,9 @@ ABungBungCharacter::ABungBungCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
-	NameTagFront = CreateDefaultSubobject<UWidgetComponent>(TEXT("NameTagFront"));
-	NameTagFront->SetupAttachment(RootComponent);
-	NameTagBack = CreateDefaultSubobject<UWidgetComponent>(TEXT("NameTagBack"));
-	NameTagBack->SetupAttachment(RootComponent);
+	NameTag = CreateDefaultSubobject<UWidgetComponent>(TEXT("NameTag"));
+	NameTag->SetupAttachment(RootComponent);
+	NameTag->InitWidget();
 }
 
 void ABungBungCharacter::Move(const FInputActionValue& Value)
@@ -85,12 +85,12 @@ void ABungBungCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void ABungBungCharacter::Sprint(const FInputActionValue& Value)
+void ABungBungCharacter::Sprint_Implementation(const FInputActionValue& Value)
 {
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 }
 
-void ABungBungCharacter::StopSprint(const FInputActionValue& Value)
+void ABungBungCharacter::StopSprint_Implementation(const FInputActionValue& Value)
 {
 	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 }

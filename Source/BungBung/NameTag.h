@@ -16,8 +16,11 @@ class BUNGBUNG_API UNameTag : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void NativeConstruct() override;
-	
+	bool Initialize() override;
+
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* NameTagText;
+
+	UFUNCTION(Client, Reliable)
+	void SetNameText(const FString& Name);
 };
