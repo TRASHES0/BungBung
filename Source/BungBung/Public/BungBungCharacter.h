@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "Components/WidgetComponent.h"
 #include "BungBungCharacter.generated.h"
 
 UCLASS()
@@ -52,7 +53,9 @@ protected:
 	void Look(const FInputActionValue& Value);
 	
 	/** Called for Sprint input */
+	UFUNCTION()
 	void Sprint(const FInputActionValue& Value);
+	UFUNCTION()
 	void StopSprint(const FInputActionValue& Value);
 			
 
@@ -68,4 +71,8 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+private:
+	UPROPERTY(EditAnywhere)
+	UWidgetComponent* NameTag;
 };
