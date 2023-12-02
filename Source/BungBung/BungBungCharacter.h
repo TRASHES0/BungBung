@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
-#include "NameTag.h"
 #include "Components/WidgetComponent.h"
 #include "BungBungCharacter.generated.h"
 
