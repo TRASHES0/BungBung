@@ -73,11 +73,8 @@ public:
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
-private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UWidgetComponent* NameTag;
-
+private:
 	bool bIsSprinting=false;
-
-	bool CheckValid();
 };

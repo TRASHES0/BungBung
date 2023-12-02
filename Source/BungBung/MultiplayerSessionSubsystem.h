@@ -46,6 +46,9 @@ public:
 	FMultiplayerOnStartSessionComplete MultiplayerOnStartSessionComplete;
 	FMultiplayerOnDestroySessionComplete MultiplayerOnDestroySessionComplete;
 
+	UPROPERTY(BlueprintReadOnly)
+	FText PlayerName;
+
 protected:
 	// ----------------------------------------------------------------------------------------------
 	// Internal Callbacks for the delegate we'll add to the Online Session Interface delegate list.

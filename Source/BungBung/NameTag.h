@@ -14,15 +14,9 @@ UCLASS()
 class BUNGBUNG_API UNameTag : public UUserWidget
 {
 	GENERATED_BODY()
-public:
-	void SetNameTag(const FText& Name);
 
-protected:
-	UPROPERTY(meta=(BindWidget))
+public:
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UTextBlock* NameTagText;
 
-	UFUNCTION(Server, Reliable)
-	void ServerSetNameText(const FText& Name);
-	UFUNCTION(NetMulticast, Reliable)
-	void MulticastSetNameText(const FText& Name);
 };

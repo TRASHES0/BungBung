@@ -101,11 +101,6 @@ void ABungBungCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-
-	if(CheckValid())
-	{
-		Cast<UNameTag>(NameTag->GetWidget())->SetNameTag(GetGameInstance<UBungBungGameInstance>()->PlayerName);
-	}
 }
 
 void ABungBungCharacter::Tick(float DeltaSeconds)
@@ -113,13 +108,6 @@ void ABungBungCharacter::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 
 	GetCharacterMovement()->MaxWalkSpeed = bIsSprinting ? 600.f : 300.f;
-}
-
-bool ABungBungCharacter::CheckValid()
-{
-	if(NameTag->GetWidget()->IsValidLowLevel()) return true;
-	
-	return CheckValid();
 }
 
 void ABungBungCharacter::Sprint_Implementation(const FInputActionValue& Value)

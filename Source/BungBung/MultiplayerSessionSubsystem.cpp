@@ -20,7 +20,6 @@ UMultiplayerSessionSubsystem::UMultiplayerSessionSubsystem()
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Blue, FString::Printf(TEXT("Current Subsystem : %s"), *Subsystem->GetSubsystemName().ToString()));
 		}
-		SessionInterface = Subsystem->GetSessionInterface();
 	}
 }
 
