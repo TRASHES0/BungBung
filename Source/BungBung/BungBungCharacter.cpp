@@ -10,7 +10,6 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "NameTag.h"
 #include "GameFramework/PlayerState.h"
 
 // Sets default values
