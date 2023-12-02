@@ -2,6 +2,8 @@
 
 
 #include "BungBungCharacter.h"
+
+#include "BungBungGameInstance.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -9,6 +11,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "NameTag.h"
+#include "GameFramework/PlayerState.h"
 
 // Sets default values
 ABungBungCharacter::ABungBungCharacter()
@@ -43,10 +46,9 @@ ABungBungCharacter::ABungBungCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
-
+	
 	NameTag = CreateDefaultSubobject<UWidgetComponent>(TEXT("NameTag"));
 	NameTag->SetupAttachment(RootComponent);
-	NameTag->InitWidget();
 }
 
 void ABungBungCharacter::Move(const FInputActionValue& Value)
@@ -109,8 +111,22 @@ void ABungBungCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
+
+	if(this->IsLocallyControlled())
+	{
+		if(CheckValid())
+		{
+			Cast<UNameTag>(NameTag->GetWidget())->SetNameTag(GetGameInstance<UBungBungGameInstance>()->PlayerName);
+			NameTag->SetHiddenInGame(false);
+		}
+	}
 }
 
+bool ABungBungCharacter::CheckValid()
+{
+	if(NameTag->GetWidget()->IsValidLowLevel()) return true;
+	else CheckValid();
+}
 
 // Called to bind functionality to input
 void ABungBungCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

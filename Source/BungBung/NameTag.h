@@ -14,13 +14,13 @@ UCLASS()
 class BUNGBUNG_API UNameTag : public UUserWidget
 {
 	GENERATED_BODY()
+public:
+	void SetNameTag(const FText& Name);
 
 protected:
-	bool Initialize() override;
-
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* NameTagText;
 
 	UFUNCTION(Client, Reliable)
-	void SetNameText(const FString& Name);
+	void ServerSetNameText(const FText& Name);
 };

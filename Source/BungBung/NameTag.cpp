@@ -4,22 +4,15 @@
 #include "NameTag.h"
 #include "GameFramework/PlayerState.h"
 
-void UNameTag::SetNameText_Implementation(const FString& Name)
+void UNameTag::ServerSetNameText_Implementation(const FText& Name)
 {
     if(NameTagText)
     {
-        NameTagText->SetText(FText::FromString(Name));
+        NameTagText->SetText(Name);
     }
 }
 
-bool UNameTag::Initialize()
+void UNameTag::SetNameTag(const FText& Name)
 {
-    if(!Super::Initialize()) return false;
-
-    if(ULocalPlayer* LocalPlayer = GetWorld()->GetFirstLocalPlayerFromController())
-    {
-        SetNameText(LocalPlayer->GetNickname());
-    }
-    
-    return true;
+    ServerSetNameText(Name);
 }

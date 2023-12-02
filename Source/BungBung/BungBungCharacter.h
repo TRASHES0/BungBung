@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "InputActionValue.h"
+#include "NameTag.h"
 #include "Components/WidgetComponent.h"
 #include "BungBungCharacter.generated.h"
 
@@ -57,7 +58,6 @@ protected:
 	void Sprint(const FInputActionValue& Value);
 	UFUNCTION(Server, Reliable)
 	void StopSprint(const FInputActionValue& Value);
-			
 
 protected:
 	// APawn interface
@@ -65,7 +65,6 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay() override;
-
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -75,4 +74,6 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	class UWidgetComponent* NameTag;
+
+	bool CheckValid();
 };
