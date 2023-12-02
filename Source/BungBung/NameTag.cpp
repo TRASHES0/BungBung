@@ -6,13 +6,18 @@
 
 void UNameTag::ServerSetNameText_Implementation(const FText& Name)
 {
-    if(NameTagText)
-    {
-        NameTagText->SetText(Name);
-    }
+    MulticastSetNameText(Name);
 }
 
 void UNameTag::SetNameTag(const FText& Name)
 {
     ServerSetNameText(Name);
+}
+
+void UNameTag::MulticastSetNameText_Implementation(const FText& Name)
+{
+    if(NameTagText)
+    {
+        NameTagText->SetText(Name);
+    }
 }

@@ -21,6 +21,8 @@ protected:
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* NameTagText;
 
-	UFUNCTION(Client, Reliable)
+	UFUNCTION(Server, Reliable)
 	void ServerSetNameText(const FText& Name);
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastSetNameText(const FText& Name);
 };
