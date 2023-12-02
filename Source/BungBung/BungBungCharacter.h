@@ -74,6 +74,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UWidgetComponent* NameTag;
+	
 private:
 	bool bIsSprinting=false;
 };
