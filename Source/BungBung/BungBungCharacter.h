@@ -54,11 +54,17 @@ protected:
 	void Look(const FInputActionValue& Value);
 	
 	/** Called for Sprint input */
-	UFUNCTION(Server, Reliable)
 	void Sprint(const FInputActionValue& Value);
-	UFUNCTION(Server, Reliable)
 	void StopSprint(const FInputActionValue& Value);
-
+	UFUNCTION(Server, Reliable)
+	void Server_Sprint(const FInputActionValue& Value);
+	UFUNCTION(Server, Reliable)
+	void Server_StopSprint(const FInputActionValue& Value);
+	UFUNCTION(NetMulticast, Reliable)
+	void Multicast_Sprint(const FInputActionValue& Value);
+	UFUNCTION(NetMulticast, Reliable)
+	void Multicast_StopSprint(const FInputActionValue& Value);
+	
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

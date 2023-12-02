@@ -87,14 +87,24 @@ void ABungBungCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void ABungBungCharacter::Sprint_Implementation(const FInputActionValue& Value)
+void ABungBungCharacter::Sprint(const FInputActionValue& Value)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	Server_Sprint(Value);
 }
 
-void ABungBungCharacter::StopSprint_Implementation(const FInputActionValue& Value)
+void ABungBungCharacter::StopSprint(const FInputActionValue& Value)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 300.f;
+	Server_StopSprint(Value);
+}
+
+void ABungBungCharacter::Server_Sprint_Implementation(const FInputActionValue& Value)
+{
+	Multicast_Sprint(Value);
+}
+
+void ABungBungCharacter::Server_StopSprint_Implementation(const FInputActionValue& Value)
+{
+	Multicast_Sprint(Value);
 }
 
 // Called when the game starts or when spawned
@@ -127,6 +137,16 @@ bool ABungBungCharacter::CheckValid()
 	if(NameTag->GetWidget()->IsValidLowLevel()) return true;
 	
 	return CheckValid();
+}
+
+void ABungBungCharacter::Multicast_Sprint_Implementation(const FInputActionValue& Value)
+{
+	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+}
+
+void ABungBungCharacter::Multicast_StopSprint_Implementation(const FInputActionValue& Value)
+{
+	GetCharacterMovement()->MaxWalkSpeed = 300.f;
 }
 
 // Called to bind functionality to input
