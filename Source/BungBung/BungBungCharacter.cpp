@@ -125,7 +125,8 @@ void ABungBungCharacter::BeginPlay()
 bool ABungBungCharacter::CheckValid()
 {
 	if(NameTag->GetWidget()->IsValidLowLevel()) return true;
-	else CheckValid();
+	
+	return CheckValid();
 }
 
 // Called to bind functionality to input
