@@ -53,10 +53,12 @@ protected:
 	void Look(const FInputActionValue& Value);
 	
 	/** Called for Sprint input */
-	UFUNCTION(Server, Reliable)
 	void Sprint(const FInputActionValue& Value);
-	UFUNCTION(Server, Reliable)
 	void StopSprint(const FInputActionValue& Value);
+	UFUNCTION(Server, Reliable)
+	void ServerSprint(const FInputActionValue& Value);
+	UFUNCTION(Server, Reliable)
+	void ServerStopSprint(const FInputActionValue& Value);
 	
 protected:
 	// APawn interface
@@ -64,8 +66,6 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay() override;
-
-	virtual void Tick(float DeltaSeconds) override;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
