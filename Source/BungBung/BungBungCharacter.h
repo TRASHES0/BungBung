@@ -71,9 +71,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	class UWidgetComponent* NameTag;
 	
 private:
 	bool bIsSprinting=false;
