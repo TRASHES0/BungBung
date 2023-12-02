@@ -102,12 +102,9 @@ void ABungBungCharacter::BeginPlay()
 		}
 	}
 
-	if(this->IsLocallyControlled())
+	if(CheckValid())
 	{
-		if(CheckValid())
-		{
-			Cast<UNameTag>(NameTag->GetWidget())->SetNameTag(GetGameInstance<UBungBungGameInstance>()->PlayerName);
-		}
+		Cast<UNameTag>(NameTag->GetWidget())->SetNameTag(GetGameInstance<UBungBungGameInstance>()->PlayerName);
 	}
 }
 
