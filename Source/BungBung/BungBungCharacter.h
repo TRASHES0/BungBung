@@ -54,16 +54,10 @@ protected:
 	void Look(const FInputActionValue& Value);
 	
 	/** Called for Sprint input */
+	UFUNCTION(Server, Reliable)
 	void Sprint(const FInputActionValue& Value);
+	UFUNCTION(Server, Reliable)
 	void StopSprint(const FInputActionValue& Value);
-	UFUNCTION(Server, Reliable)
-	void Server_Sprint(const FInputActionValue& Value);
-	UFUNCTION(Server, Reliable)
-	void Server_StopSprint(const FInputActionValue& Value);
-	UFUNCTION(NetMulticast, Reliable)
-	void Multicast_Sprint(const FInputActionValue& Value);
-	UFUNCTION(NetMulticast, Reliable)
-	void Multicast_StopSprint(const FInputActionValue& Value);
 	
 protected:
 	// APawn interface
@@ -71,6 +65,8 @@ protected:
 	
 	// To add mapping context
 	virtual void BeginPlay() override;
+
+	virtual void Tick(float DeltaSeconds) override;
 public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
@@ -80,6 +76,8 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	class UWidgetComponent* NameTag;
+
+	bool bIsSprinting=false;
 
 	bool CheckValid();
 };

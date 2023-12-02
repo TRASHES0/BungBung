@@ -87,26 +87,6 @@ void ABungBungCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void ABungBungCharacter::Sprint(const FInputActionValue& Value)
-{
-	Server_Sprint(Value);
-}
-
-void ABungBungCharacter::StopSprint(const FInputActionValue& Value)
-{
-	Server_StopSprint(Value);
-}
-
-void ABungBungCharacter::Server_Sprint_Implementation(const FInputActionValue& Value)
-{
-	Multicast_Sprint(Value);
-}
-
-void ABungBungCharacter::Server_StopSprint_Implementation(const FInputActionValue& Value)
-{
-	Multicast_Sprint(Value);
-}
-
 // Called when the game starts or when spawned
 void ABungBungCharacter::BeginPlay()
 {
@@ -127,9 +107,15 @@ void ABungBungCharacter::BeginPlay()
 		if(CheckValid())
 		{
 			Cast<UNameTag>(NameTag->GetWidget())->SetNameTag(GetGameInstance<UBungBungGameInstance>()->PlayerName);
-			NameTag->SetHiddenInGame(false);
 		}
 	}
+}
+
+void ABungBungCharacter::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	GetCharacterMovement()->MaxWalkSpeed = bIsSprinting ? 600.f : 300.f;
 }
 
 bool ABungBungCharacter::CheckValid()
@@ -139,14 +125,14 @@ bool ABungBungCharacter::CheckValid()
 	return CheckValid();
 }
 
-void ABungBungCharacter::Multicast_Sprint_Implementation(const FInputActionValue& Value)
+void ABungBungCharacter::Sprint_Implementation(const FInputActionValue& Value)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 500.f;
+	bIsSprinting = true;
 }
 
-void ABungBungCharacter::Multicast_StopSprint_Implementation(const FInputActionValue& Value)
+void ABungBungCharacter::StopSprint_Implementation(const FInputActionValue& Value)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 300.f;
+	bIsSprinting = false;
 }
 
 // Called to bind functionality to input
