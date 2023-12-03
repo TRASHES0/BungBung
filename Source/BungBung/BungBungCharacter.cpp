@@ -99,26 +99,21 @@ void ABungBungCharacter::BeginPlay()
 	}
 }
 
-void ABungBungCharacter::Sprint(const FInputActionValue& Value)
+void ABungBungCharacter::Tick(float DeltaSeconds)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 1000.f;
-	ServerSprint(Value);
+	Super::Tick(DeltaSeconds);
+
+	GetCharacterMovement()->MaxWalkSpeed = bIsSprinting ? 1000.f : 300.f;
 }
 
-void ABungBungCharacter::StopSprint(const FInputActionValue& Value)
+void ABungBungCharacter::Sprint_Implementation(const FInputActionValue& Value)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 300.f;
-	ServerStopSprint(Value);
+	bIsSprinting = true;
 }
 
-void ABungBungCharacter::ServerSprint_Implementation(const FInputActionValue& Value)
+void ABungBungCharacter::StopSprint_Implementation(const FInputActionValue& Value)
 {
-	GetCharacterMovement()->MaxWalkSpeed = 1000.f;
-}
-
-void ABungBungCharacter::ServerStopSprint_Implementation(const FInputActionValue& Value)
-{
-	GetCharacterMovement()->MaxWalkSpeed = 300.f;
+	bIsSprinting = false;
 }
 
 // Called to bind functionality to input
