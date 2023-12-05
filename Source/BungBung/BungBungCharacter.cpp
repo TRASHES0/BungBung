@@ -103,7 +103,7 @@ void ABungBungCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	GetCharacterMovement()->MaxWalkSpeed = bIsSprinting ? 1000.f : 300.f;
+	GetCharacterMovement()->MaxWalkSpeed = bIsSprinting ? 1000.f : 1000.f;
 }
 
 void ABungBungCharacter::Sprint_Implementation(const FInputActionValue& Value)
