@@ -5,7 +5,9 @@
 
 #include "OnlineSessionSettings.h"
 #include "OnlineSubsystem.h"
+#include "UserObject.h"
 #include "Blueprint/WidgetLayoutLibrary.h"
+#include "GameFramework/PlayerState.h"
 #include "Kismet/GameplayStatics.h"
 
 
@@ -58,10 +60,6 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		}
 		MenuTearDown();
 		UWorld* World = GetWorld();
-		if(World)
-		{
-			World->ServerTravel("/Game/Map/TestLand?listen");
-		}
 		if(RoomWidget)
 		{
 			RemoveFromParent();
@@ -169,8 +167,6 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 		IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
 		if(SessionInterface.IsValid())
 		{
-			MenuTearDown();
-			UGameplayStatics::OpenLevel(this, "/Game/Map/TestLand");
 			//Join Session
 			FString Address;
 			if(SessionInterface->GetResolvedConnectString(SelectedSession, NAME_GamePort, Address))
@@ -183,14 +179,12 @@ void ULobbyMenuWidget::OnJoinSessionComplete(EOnJoinSessionCompleteResult::Type 
 						GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, FString::Printf(TEXT("Connect IP:%s"), *Address));
 					}
 					PlayerController->ClientTravel(Address, TRAVEL_Absolute);
-					/*
 					if(RoomWidget)
 					{
 						RemoveFromParent();
 						UUserWidget* tmp = CreateWidget(GetWorld(), RoomWidget);
 						tmp->AddToViewport();
 					}
-					*/
 				}
 			}
 		}

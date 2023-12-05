@@ -4,6 +4,7 @@
 #include "RoomMenuWidget.h"
 
 #include "OnlineSubsystem.h"
+#include "UserObject.h"
 #include "GameFramework/GameSession.h"
 #include "GameFramework/PlayerState.h"
 #include "Kismet/GameplayStatics.h"
@@ -11,6 +12,9 @@
 void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	SendPlayerData();
+	
 	UWorld* World = GetWorld();
 	if(World)
 	{
@@ -34,6 +38,19 @@ void URoomMenuWidget::StartButtonClicked()
 	if(World)
 	{
 		World->ServerTravel("/Game/Map/TestLand?listen");
+	}
+}
+
+void URoomMenuWidget::SendPlayerData_Implementation()
+{
+	UUserObject* UserData = NewObject<UUserObject>();
+	if(UserData)
+	{
+		UserData->PlayerName = GetWorld()->GetFirstPlayerController()->GetPlayerState<APlayerState>()->GetPlayerName();
+	}
+	if(MultiplayerTileView)
+	{
+		MultiplayerTileView->AddItem(UserData);
 	}
 }
 

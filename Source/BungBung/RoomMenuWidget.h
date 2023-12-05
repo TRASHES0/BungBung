@@ -6,6 +6,8 @@
 #include "MultiplayRoomSessionObject.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Button.h"
+#include "MultiplayerSessionSubsystem.h"
+#include "MultiplayerTileView.h"
 #include "RoomMenuWidget.generated.h"
 
 /**
@@ -18,15 +20,19 @@ class BUNGBUNG_API URoomMenuWidget : public UUserWidget
 
 	virtual void NativeConstruct() override;
 
-public:
-	void GetSession();
-
 protected:
+	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
+	
 	UPROPERTY(meta=(BindWidget))
 	UButton* StartButton;
+	UPROPERTY(meta=(BindWidget))
+	UMultiplayerTileView* MultiplayerTileView;
 
 	UFUNCTION(BlueprintCallable)
 	void StartButtonClicked();
+
+	UFUNCTION(Server, Reliable)
+	void SendPlayerData();
 
 private:
 	void MenuTearDown();
