@@ -4,14 +4,40 @@
 #include "RoomMenuWidget.h"
 
 #include "OnlineSubsystem.h"
-#include "UserObject.h"
 #include "GameFramework/GameSession.h"
 #include "GameFramework/PlayerState.h"
+#include "GameFramework/Actor.h"
 #include "Kismet/GameplayStatics.h"
 
 void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+	
+	if(GetWorld())
+	{
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("I AM MASTER")));
+		}
+		bIsMaster = true;
+	}
+	else
+	{
+		if(GEngine)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("I AM CLIENT")));
+		}
+		StartButtonText->SetText(FText::FromString("준비"));
+		bIsMaster = false;
+	}
+	
+	UserData = NewObject<UUserObject>();
+	if(UserData)
+	{
+		UserData->PlayerName = GetWorld()->GetFirstPlayerController()->GetPlayerState<APlayerState>()->GetPlayerName();
+		UserData->bIsMaster = bIsMaster;
+		UserData->bIsReady = false;
+	}
 
 	SendPlayerData();
 	
@@ -33,25 +59,42 @@ void URoomMenuWidget::NativeConstruct()
 
 void URoomMenuWidget::StartButtonClicked()
 {
-	MenuTearDown();
-	UWorld* World = GetWorld();
-	if(World)
+	if(bIsMaster)
 	{
-		World->ServerTravel("/Game/Map/TestLand?listen");
+		MenuTearDown();
+		UWorld* World = GetWorld();
+		if(World)
+		{
+			World->ServerTravel("/Game/Map/TestLand?listen");
+		}
+	}
+	else
+	{
+		if(UserData->bIsReady)
+		{
+			UserData->bIsReady = false;
+			StartButtonText->SetText(FText::FromString("READY"));
+		}
+		else
+		{
+			UserData->bIsReady = true;
+			StartButtonText->SetText(FText::FromString("UNREADY"));
+		}
+		UpdatePlayerData();
 	}
 }
 
 void URoomMenuWidget::SendPlayerData_Implementation()
 {
-	UUserObject* UserData = NewObject<UUserObject>();
-	if(UserData)
-	{
-		UserData->PlayerName = GetWorld()->GetFirstPlayerController()->GetPlayerState<APlayerState>()->GetPlayerName();
-	}
 	if(MultiplayerTileView)
 	{
 		MultiplayerTileView->AddItem(UserData);
 	}
+}
+
+void URoomMenuWidget::UpdatePlayerData_Implementation()
+{
+	
 }
 
 void URoomMenuWidget::MenuTearDown()

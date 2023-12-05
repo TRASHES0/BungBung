@@ -16,5 +16,7 @@ class BUNGBUNG_API UUserObject : public UObject
 
 public:
 	FString PlayerName;
+	bool bIsReady;
+	bool bIsMaster;
 	
 };
