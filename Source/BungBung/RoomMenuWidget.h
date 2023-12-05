@@ -29,7 +29,7 @@ protected:
 	UButton* StartButton;
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* StartButtonText;
-	UPROPERTY(meta=(BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UMultiplayerTileView* MultiplayerTileView;
 
 	UUserObject* UserData;

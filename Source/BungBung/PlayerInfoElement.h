@@ -22,6 +22,6 @@ protected:
 	
 	UPROPERTY(meta=(BindWidget))
 	UTextBlock* PlayerNameText;
-	UPROPERTY(meta=(BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UImage* PlayerImage;
 };
