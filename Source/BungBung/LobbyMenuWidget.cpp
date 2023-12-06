@@ -60,11 +60,9 @@ void ULobbyMenuWidget::OnCreateSessionComplete(bool bWasSuccessful)
 		}
 		MenuTearDown();
 		UWorld* World = GetWorld();
-		if(RoomWidget)
+		if(World)
 		{
-			RemoveFromParent();
-			UUserWidget* Room = CreateWidget(GetWorld(), RoomWidget);
-			Room->AddToViewport();
+			World->ServerTravel("/Game/Map/DishCharacterSelectScreen?listen");
 		}
 	}
 	else
