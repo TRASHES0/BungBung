@@ -65,7 +65,7 @@ void URoomMenuWidget::StartButtonClicked()
 		UWorld* World = GetWorld();
 		if(World)
 		{
-			World->ServerTravel("/Game/Map/TestLand", true);
+			World->ServerTravel("/Game/Map/TestLand?listen");
 		}
 	}
 	else
