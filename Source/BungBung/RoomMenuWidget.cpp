@@ -13,29 +13,10 @@ void URoomMenuWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 	
-	if(GetWorld())
-	{
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("I AM MASTER")));
-		}
-		bIsMaster = true;
-	}
-	else
-	{
-		if(GEngine)
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, FString(TEXT("I AM CLIENT")));
-		}
-		StartButtonText->SetText(FText::FromString("준비"));
-		bIsMaster = false;
-	}
-	
 	UserData = NewObject<UUserObject>();
 	if(UserData)
 	{
 		UserData->PlayerName = GetWorld()->GetFirstPlayerController()->GetPlayerState<APlayerState>()->GetPlayerName();
-		UserData->bIsMaster = bIsMaster;
 		UserData->bIsReady = false;
 	}
 
@@ -59,28 +40,12 @@ void URoomMenuWidget::NativeConstruct()
 
 void URoomMenuWidget::StartButtonClicked()
 {
-	if(bIsMaster)
+	MenuTearDown();
+	
+	UWorld* World = GetWorld();
+	if(World)
 	{
-		MenuTearDown();
-		UWorld* World = GetWorld();
-		if(World)
-		{
-			World->ServerTravel("/Game/Map/TestLand?listen");
-		}
-	}
-	else
-	{
-		if(UserData->bIsReady)
-		{
-			UserData->bIsReady = false;
-			StartButtonText->SetText(FText::FromString("READY"));
-		}
-		else
-		{
-			UserData->bIsReady = true;
-			StartButtonText->SetText(FText::FromString("UNREADY"));
-		}
-		UpdatePlayerData();
+		World->ServerTravel("/Game/Map/TestLand?listen");
 	}
 }
 
@@ -90,11 +55,6 @@ void URoomMenuWidget::SendPlayerData_Implementation()
 	{
 		MultiplayerTileView->AddItem(UserData);
 	}
-}
-
-void URoomMenuWidget::UpdatePlayerData_Implementation()
-{
-	
 }
 
 void URoomMenuWidget::MenuTearDown()

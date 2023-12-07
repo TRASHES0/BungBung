@@ -40,10 +40,6 @@ protected:
 	UFUNCTION(Server, Reliable)
 	void SendPlayerData();
 
-	UFUNCTION(Server, Reliable)
-	void UpdatePlayerData();
-
 private:
 	void MenuTearDown();
-	bool bIsMaster=false;
 };

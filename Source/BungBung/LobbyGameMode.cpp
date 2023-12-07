@@ -45,13 +45,14 @@ void ALobbyGameMode::Logout(AController* Exiting)
 	if (PlayerState)
 	{
 		int32 NumberOfPlayers = GameState->PlayerArray.Num();
-		GEngine->AddOnScreenDebugMessage
-		(
-			1,
-			60.f,
-			FColor::Yellow,
-			FString::Printf(TEXT("Players in Game:%d "), NumberOfPlayers-1)
-		);
+		if(GEngine)
+			GEngine->AddOnScreenDebugMessage
+			(
+				1,
+				60.f,
+				FColor::Yellow,
+				FString::Printf(TEXT("Players in Game:%d "), NumberOfPlayers-1)
+			);
 		FString Playername = PlayerState->GetPlayerName();
 		GEngine->AddOnScreenDebugMessage
 		(
