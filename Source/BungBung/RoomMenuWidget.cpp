@@ -45,7 +45,30 @@ void URoomMenuWidget::StartButtonClicked()
 	UWorld* World = GetWorld();
 	if(World)
 	{
+<<<<<<< Updated upstream
 		World->ServerTravel("/Game/Map/TestLand?listen");
+=======
+		MenuTearDown();
+		UWorld* World = GetWorld();
+		if(World)
+		{
+			World->ServerTravel("/Game/Map/DishCharacterSelectScreen?listen");
+		}
+	}
+	else
+	{
+		if(UserData->bIsReady)
+		{
+			UserData->bIsReady = false;
+			StartButtonText->SetText(FText::FromString("READY"));
+		}
+		else
+		{
+			UserData->bIsReady = true;
+			StartButtonText->SetText(FText::FromString("UNREADY"));
+		}
+		UpdatePlayerData();
+>>>>>>> Stashed changes
 	}
 }
 
