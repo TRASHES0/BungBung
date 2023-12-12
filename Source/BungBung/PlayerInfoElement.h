@@ -20,7 +20,7 @@ class BUNGBUNG_API UPlayerInfoElement : public UUserWidget, public IUserObjectLi
 protected:
 	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
 	
-	UPROPERTY(meta=(BindWidget))
+	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UTextBlock* PlayerNameText;
 	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
 	UImage* PlayerImage;
