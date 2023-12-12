@@ -34,9 +34,6 @@ protected:
 
 	UUserObject* UserData;
 
-	UFUNCTION(BlueprintCallable)
-	void StartButtonClicked();
-	
 private:
 	void MenuTearDown();
 };

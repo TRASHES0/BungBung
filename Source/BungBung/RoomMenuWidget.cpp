@@ -29,16 +29,6 @@ void URoomMenuWidget::NativeConstruct()
 			PlayerController->SetShowMouseCursor(true);
 		}
 	}
-	
-	if(StartButton)
-	{
-		StartButton->OnClicked.AddDynamic(this, &ThisClass::URoomMenuWidget::StartButtonClicked);
-	}
-}
-
-void URoomMenuWidget::StartButtonClicked()
-{
-	MenuTearDown();
 }
 
 void URoomMenuWidget::MenuTearDown()
