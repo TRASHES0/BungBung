@@ -19,21 +19,5 @@ UCLASS()
 class BUNGBUNG_API URoomMenuWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
-	virtual void NativeConstruct() override;
-
-protected:
-	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
 	
-	UPROPERTY(meta=(BindWidget))
-	UButton* StartButton;
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* StartButtonText;
-	UPROPERTY(BlueprintReadWrite, meta=(BindWidget))
-	UMultiplayerTileView* MultiplayerTileView;
-
-	UUserObject* UserData;
-
-private:
-	void MenuTearDown();
 };
