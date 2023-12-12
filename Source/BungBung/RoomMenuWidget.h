@@ -36,10 +36,7 @@ protected:
 
 	UFUNCTION(BlueprintCallable)
 	void StartButtonClicked();
-
-	UFUNCTION(Server, Reliable)
-	void SendPlayerData();
-
+	
 private:
 	void MenuTearDown();
 };
