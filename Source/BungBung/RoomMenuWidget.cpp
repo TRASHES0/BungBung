@@ -28,8 +28,7 @@ void URoomMenuWidget::NativeConstruct()
 		{
 			PlayerController->SetShowMouseCursor(true);
 		}
-	}
-}
+	}}
 
 void URoomMenuWidget::MenuTearDown()
 {
