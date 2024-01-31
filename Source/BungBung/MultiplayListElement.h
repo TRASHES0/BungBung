@@ -19,16 +19,5 @@ UCLASS()
 class BUNGBUNG_API UMultiplayListElement : public UUserWidget, public IUserObjectListEntry
 {
 	GENERATED_BODY()
-
-protected:
-	virtual void NativeOnListItemObjectSet(UObject* ListItemObject) override;
 	
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* RoomNameText;
-	UPROPERTY(meta=(BindWidget))
-	UTextBlock* CurrentPlayerCntText;
-	
-
-	UMultiplayerSessionSubsystem* MultiplayerSessionSubsystem;
-	FOnlineSessionSearchResult Session;
 };

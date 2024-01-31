@@ -7,7 +7,6 @@
 #include "MultiplayerSessionSubsystem.h"
 #include "MultiplayListView.h"
 #include "MultiplayRoomSessionObject.h"
-#include "RoomMenuWidget.h"
 #include "Components/Button.h"
 #include "LobbyMenuWidget.generated.h"
 
@@ -24,9 +23,6 @@ protected:
 	int32 NumPublicConnections;
 	FString MatchType;
 	FString PathToLevel;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Widget)
-	TSubclassOf<UUserWidget> RoomWidget;
 	
 	UPROPERTY(meta=(BindWidget))
 	UButton* HostButton;
